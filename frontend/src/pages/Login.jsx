@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext.jsx';
 
 const Login = () => {
 
@@ -9,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [bio, setBio] = useState();
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+  const {login} = useContext(AuthContext);
 
   const onSubmitHandler =(e)=>{
       e.preventDefault();
@@ -16,6 +18,8 @@ const Login = () => {
         setIsDataSubmitted(true);
         return;
       }
+        login(currState === 'Sign up' ? 'signup': 'login', {fullName, email, password, bio})
+
   }
 
   return (
@@ -35,17 +39,17 @@ const Login = () => {
         </h2>
 
         {currState == 'Sign up' && !isDataSubmitted && (
-          <input onChange={(e)=>setFullName(e.target.value)} value={fullName} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="text" placeholder='Full Name' required />
+          <input onChange={(e)=>setFullName(e.target.value)} value={fullName || ""} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="text" placeholder='Full Name' required />
         )}
 
         {!isDataSubmitted && (
           <>
-            <input onChange={(e)=>setEmail(e.targzet.value)} value={email} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="text" placeholder='Email' required />
-            <input onChange={(e)=>setPassword(e.target.value)} value={password} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="password" placeholder='Password' required />
+            <input onChange={(e)=>setEmail(e.target.value)} value={email || ""} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="email" placeholder='Email' required />
+            <input onChange={(e)=>setPassword(e.target.value)} value={password || ""} className='h-10 w-full border border-gray-500 rounded-xs mt-4 pl-2' type="password" placeholder='Password' required />
           </>
         )}
         {currState == 'Sign up' && isDataSubmitted && (
-          <textarea onChange={(e)=>setBio(e.target.value)} value={bio} rows={4} className='w-full border border-gray-500 rounded-xs mt-4 pl-2' placeholder='provide a short bio...' required></textarea>
+          <textarea onChange={(e)=>setBio(e.target.value)} value={bio || ""} rows={4} className='w-full border border-gray-500 rounded-xs mt-4 pl-2' placeholder='provide a short bio...' required></textarea>
         )}
         <button  className='h-10 w-full border border-gray-500 rounded-xs bg-linear-to-r from-violet-400 to-violet-600 mt-4 pl-2'>{currState == 'Sign up' ? "Create Account" : "Login Now"}</button>
 

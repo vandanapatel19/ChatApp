@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import imagekit from "../lib/imagekit.js";
 import { generateToken } from "../lib/utils.js";
 
 
@@ -40,17 +41,20 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
 
         const userData = await User.findOne({ email });
-        const isPasswordCorrect = await bcrypt.compare(password, userData.password);
+        if (!userData) {
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
+        }
 
+        const isPasswordCorrect = await bcrypt.compare(password, userData.password);
         if (!isPasswordCorrect) {
-            res.json({ success: false, message: "Invalid credentials" });
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
 
         const token = generateToken(userData._id);
 
-        res.json({ success: true, message: "login successfully", token, userData });
+        return res.json({ success: true, message: "login successfully", token, userData });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.status(500).json({ success: false, message: error.message });
     }
 }
 
@@ -65,17 +69,28 @@ export const updateProfile = async (req, res) => {
         const { fullName, bio, profilePic } = req.body;
         const userId = req.user._id;
         let updatedUser;
-        if(!profilePic){
-            updatedUser = await User.findOneAndUpdate({_id:userId}, {fullName, bio}, {new:true});
+
+        if (!profilePic) {
+            updatedUser = await User.findOneAndUpdate({ _id: userId }, { fullName, bio }, { new: true });
         }
-        else{
-            const upload = await cloudinary.uploader.upload(profilePic);
-            updatedUser = await User.findOneAndUpdate({_id:userId}, {fullName, bio, profilePic: upload.secure_url}, {new:true});
+         else {
+              // Upload image to ImageKit
+            const upload = await imagekit.upload({
+                file: profilePic,
+                fileName: `profile_${userId}_${Date.now()}.jpg`,
+                folder: "/linkup/profile"
+            });
+            updatedUser = await User.findOneAndUpdate(
+                { _id: userId },
+                { fullName, bio, profilePic: upload.url },
+                { returnDocument: 'after' },
+                { new: true }
+            );
         }
 
-        res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
+        return res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: error.message });
+        return res.status(500).json({ success: false, message: error.message });
     }
 }

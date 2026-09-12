@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Message from "../models/Message.js";
-import cloudinary from "../lib/cloudinary.js";
+import imagekit from "../lib/imagekit.js";
 import {io, userSocketMap} from "../server.js";
 
 
@@ -70,11 +70,17 @@ export const sendMessage = async (req, res) => {
         const senderId = req.user.id;
 
         let imageUrl;
-        if (image) {
-            //upload image to cloudinary
-            const uploadResponse = await cloudinary.uploader.upload(image);
-            imageUrl = uploadResponse.secure_url;
+          if (image) {
+            // Upload image to ImageKit
+            const uploadResponse = await imagekit.upload({
+                file: image,
+                fileName: `chat_${Date.now()}.jpg`,
+                folder: "/linkup"
+            });
+
+            imageUrl = uploadResponse.url;
         }
+        
         const newMessage = await Message.create({
             senderId,
             receiverId,
