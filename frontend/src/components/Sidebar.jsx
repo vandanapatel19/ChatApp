@@ -21,8 +21,11 @@ const Sidebar = () => {
         <div className={`bg-[#8285B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${selectedUser ? "max-md:hidden" : " "}`}>
             <div className='pb-5'>
                 <div className='flex justify-between items-center'>
-                    <img src={assets.linkup} alt="logo" className='max-w-20' />
-                    <p className='text-xl mr-100 font-serif '>LinkUp</p>
+                    <div className="flex items-center gap-2">
+                        <img src={assets.linkup} alt="logo" className='max-w-20' />
+                        <p className='text-xl font-serif '>LinkUp</p>
+                    </div>
+
                     <div className='relative py-2 group'>
                         <img src={assets.menu_icon} alt="menu" className='max-h-5 cursor-pointer' />
                         <div className='absolute top-full right-0 z-20 ml-2 w-32 p-5 bg-[#282142] border border-gray-600 text-gray-100 rounded-md hidden group-hover:block'>
