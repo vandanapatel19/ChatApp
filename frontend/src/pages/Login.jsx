@@ -19,11 +19,10 @@ const Login = () => {
         return;
       }
         login(currState === 'Sign up' ? 'signup': 'login', {fullName, email, password, bio})
-
   }
 
   return (
-    <div className={`bg-cover bg-center backdrop-blur-2xl min-h-screen  grid-cols-1 relative md:grid-cols-2 flex items-center  justify-center sm:justify-evenly max-sm:flex-col gap-8 `}>
+    <div className={`bg-cover bg-center backdrop-blur-2xl min-h-screen grid-cols-1 relative md:grid-cols-2 flex items-center  justify-center sm:justify-evenly max-sm:flex-col gap-8 `}>
       {/* left */}
       <div className='flex flex-col items-center gap-5'>
         <img className='h-40' src={assets.linkup} alt="" />
@@ -51,7 +50,7 @@ const Login = () => {
         {currState == 'Sign up' && isDataSubmitted && (
           <textarea onChange={(e)=>setBio(e.target.value)} value={bio || ""} rows={4} className='w-full border border-gray-500 rounded-xs mt-4 pl-2' placeholder='provide a short bio...' required></textarea>
         )}
-        <button  className='h-10 w-full border border-gray-500 rounded-xs bg-gradient-to-r from-violet-400 to-violet-600 mt-4 pl-2'>{currState == 'Sign up' ? "Create Account" : "Login Now"}</button>
+        <button className='h-10 w-full border border-violet-400 rounded-xs bg-violet-600 text-white hover:bg-violet-700 mt-4 pl-2' type='submit'>{currState == 'Sign up' ? "Create Account" : "Login Now"}</button>
 
         <div className='flex items-center gap-2 mt-2 text-xs'>
           <input type="checkbox" />
