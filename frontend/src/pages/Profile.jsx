@@ -45,7 +45,7 @@ const Profile = () => {
           <input onChange={(e) => setName(e.target.value)} value={name} type="text" placeholder='name' className='p-2 border border-gray-500 rounded-md focus: outline-none focus:ring-2 focus:ring-violet-500' />
           <textarea onChange={(e) => setBio(e.target.value)} value={bio} placeholder='bio' rows={4} className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' ></textarea>
 
-          <button className='rounded-full bg-linear-to-r from-violet-500 to-violet-900 text-lg p-2 cursor-pointer'>Save</button>
+          <button className='rounded-full bg-gradient-to-r from-violet-500 to-violet-900 text-lg p-2 cursor-pointer'>Save</button>
         </form>
         <img className='max-w-44 aspect-square mx-10 max-sm:mt-10 rounded-full' src={authUser?.profilePic || assets.linkup} alt="" />
 

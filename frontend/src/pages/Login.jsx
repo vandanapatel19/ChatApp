@@ -51,7 +51,7 @@ const Login = () => {
         {currState == 'Sign up' && isDataSubmitted && (
           <textarea onChange={(e)=>setBio(e.target.value)} value={bio || ""} rows={4} className='w-full border border-gray-500 rounded-xs mt-4 pl-2' placeholder='provide a short bio...' required></textarea>
         )}
-        <button  className='h-10 w-full border border-gray-500 rounded-xs bg-linear-to-r from-violet-400 to-violet-600 mt-4 pl-2'>{currState == 'Sign up' ? "Create Account" : "Login Now"}</button>
+        <button  className='h-10 w-full border border-gray-500 rounded-xs bg-gradient-to-r from-violet-400 to-violet-600 mt-4 pl-2'>{currState == 'Sign up' ? "Create Account" : "Login Now"}</button>
 
         <div className='flex items-center gap-2 mt-2 text-xs'>
           <input type="checkbox" />

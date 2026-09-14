@@ -8,6 +8,7 @@ const Sidebar = () => {
 
     const [input, setInput] = useState(false);
     const { logout, onlineUsers } = useContext(AuthContext);
+    const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
     const { getUsers, users, selectedUser, setSelectedUser, unseenMessages, setUnseenMessages } = useContext(ChatContext)
 
@@ -18,7 +19,7 @@ const Sidebar = () => {
     }, [onlineUsers])
 
     return (
-        <div className={`bg-[#8285B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${selectedUser ? "max-md:hidden" : " "}`}>
+        <div className={`bg-[#8285B2]/10 h-full p-5 rounded-r-xl overflow-y-auto text-white ${selectedUser ? "max-md:hidden" : " "}`}>
             <div className='pb-5'>
                 <div className='flex justify-between items-center'>
                     <div className="flex items-center gap-2">
@@ -26,13 +27,15 @@ const Sidebar = () => {
                         <p className='text-xl font-serif '>LinkUp</p>
                     </div>
 
-                    <div className='relative py-2 group'>
-                        <img src={assets.menu_icon} alt="menu" className='max-h-5 cursor-pointer' />
-                        <div className='absolute top-full right-0 z-20 ml-2 w-32 p-5 bg-[#282142] border border-gray-600 text-gray-100 rounded-md hidden group-hover:block'>
-                            <p onClick={() => navigate('/profile')} className='cursor-pointer text-sm '>Edit Profile</p>
-                            <hr className='my-2 border-t border-gray-500' />
-                            <p onClick={logout} className='cursor-pointer text-sm'>Logout</p>
-                        </div>
+                    <div className='relative z-50'>
+                        <img onClick={() => setMenuOpen(!menuOpen)} src={assets.menu_icon} alt="menu" className='max-h-5 cursor-pointer' />
+                        {menuOpen && (
+                            <div className='absolute top-full right-0 z-[9999] mt-2 w-32 p-4 bg-[#282142] border border-gray-600 text-gray-100 rounded-md'>
+                                <p onClick={() => navigate('/profile')} className='cursor-pointer text-sm '>Edit Profile</p>
+                                <hr className='my-2 border-t border-gray-500' />
+                                <p onClick={logout} className='cursor-pointer text-sm'>Logout</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
