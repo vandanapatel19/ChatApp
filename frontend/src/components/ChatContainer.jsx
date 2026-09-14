@@ -52,7 +52,7 @@ const ChatContainer = () => {
       
       {/* header */}
       <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
-        <img className='w-8 rounded-full' src={selectedUser.profilePic || assets.avatar_icon} alt="" />
+        <img className='w-8 h-8 rounded-full' src={selectedUser.profilePic || assets.avatar_icon} alt="" />
         <p className='flex-1 text-lg text-white flex items-center gap-2' >{selectedUser.fullName}
           {onlineUsers.includes(selectedUser._id)&&<span className='w-2 h-2 rounded-full bg-green-500'></span>}
         </p>
@@ -70,7 +70,7 @@ const ChatContainer = () => {
               <p className={`p-2 max-w-50 md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${message.senderId === authUser._id ? 'rounded-br-none' : 'rounded-bl-none'}`}>{message.text}</p>
             )}
             <div className="text-center text-xs">
-              <img src={message.senderId === authUser._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="" className='w-7 rounded-full' />
+              <img src={message.senderId === authUser._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="" className='w-7 h-7 rounded-full' />
               <p className="text-gray-500">{formatMessageTime(message.createdAt)}</p>
             </div>
           </div>
